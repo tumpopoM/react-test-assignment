@@ -79,6 +79,10 @@ function ShapeGrid() {
   const handleCardClick = (index: number) => {
     setActiveIndex(index);
     shuffle();
+
+    setTimeout(() => {
+      setActiveIndex(null);
+    }, 300);
   };
 
   const handleCardHover = (
@@ -115,6 +119,10 @@ function ShapeGrid() {
               onClick={() => {
                 setActiveTop(btn.id);
                 btn.onClick();
+
+                setTimeout(() => {
+                  setActiveTop(null);
+                }, 300);
               }}
               onMouseEnter={(e) => {
                 if (activeTop !== btn.id) {
