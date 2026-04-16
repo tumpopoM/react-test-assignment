@@ -169,6 +169,8 @@ const topBoxStyle = {
   alignItems: "center",
   justifyContent: "center",
   gap: 8,
+  cursor: "pointer",
+  userSelect: "none" as const,
 };
 
 const bottomBoxStyle = {
@@ -178,6 +180,8 @@ const bottomBoxStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  cursor: "pointer",
+  userSelect: "none" as const,
 };
 
 const gridStyle = {
