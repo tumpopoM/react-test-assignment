@@ -1,16 +1,50 @@
 import { Button, Row, Col, Input, Select, DatePicker, Radio } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
-const { Option } = Select;
+import { useDispatch, useSelector } from "react-redux";
+import { setPersons } from "../store/personSlice";
+import type { RootState } from "../store/store";
+import { useEffect, useState } from "react";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 
 function FormPage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const persons = useSelector((state: RootState) => state.person.list);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const data = localStorage.getItem("persons");
+
+    if (data) {
+      dispatch(setPersons(JSON.parse(data)));
+    }
+
+    setIsLoaded(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem("persons", JSON.stringify(persons));
+    }
+  }, [persons, isLoaded]);
 
   return (
     <div style={{ marginTop: 20 }}>
       {/* 🔹 Header */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          gap: 10,
+          marginBottom: 10,
+        }}
+      >
+        <Button onClick={() => navigate("/")}>{t("home")}</Button>
+      </div>
+
       <h2>{t("formTable")}</h2>
 
       {/* 🔹 Form Box */}
@@ -25,10 +59,13 @@ function FormPage() {
         <Row gutter={16}>
           <Col span={6}>
             <label>* {t("title")}</label>
-            <Select style={{ width: "100%" }}>
-              <Option value="mr">Mr.</Option>
-              <Option value="ms">Ms.</Option>
-            </Select>
+            <Select
+              style={{ width: "100%" }}
+              options={[
+                { value: "mr", label: "Mr." },
+                { value: "ms", label: "Ms." },
+              ]}
+            />
           </Col>
 
           <Col span={9}>
@@ -50,9 +87,10 @@ function FormPage() {
 
           <Col span={16}>
             <label>* {t("nationality")}</label>
-            <Select style={{ width: "100%" }}>
-              <Option value="thai">Thai</Option>
-            </Select>
+            <Select
+              style={{ width: "100%" }}
+              options={[{ value: "thai", label: "Thai" }]}
+            ></Select>
           </Col>
         </Row>
 

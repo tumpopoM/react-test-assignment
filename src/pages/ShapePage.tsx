@@ -8,7 +8,16 @@ function ShapePage() {
   const { t } = useTranslation();
   return (
     <div style={{ marginTop: 20 }}>
-      <Button onClick={() => navigate("/")}>{t("back")}</Button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          gap: 10,
+          marginBottom: 10,
+        }}
+      >
+        <Button onClick={() => navigate("/")}>{t("back")}</Button>
+      </div>
 
       <ShapeGrid />
     </div>
