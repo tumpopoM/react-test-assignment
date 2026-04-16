@@ -10,7 +10,18 @@ function Home() {
       <h2>{t("test1")}</h2>
 
       <div style={{ marginTop: 20 }}>
-        <button onClick={() => navigate("/shape")}>{t("layoutStyle")}</button>
+        <button
+          onClick={() => navigate("/shape")}
+          style={{
+            padding: "10px 20px",
+            borderRadius: 8,
+            border: "none",
+            background: "#6eda78",
+            cursor: "pointer",
+          }}
+        >
+          {t("layoutStyle")}
+        </button>
       </div>
     </div>
   );

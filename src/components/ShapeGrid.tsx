@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 
 function ShapeGrid() {
   const { t } = useTranslation();
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeTop, setActiveTop] = useState<number | null>(null);
   const initialShapes = [
     "square",
     "circle",
@@ -13,7 +15,6 @@ function ShapeGrid() {
     "parallelogram",
     "rectangle",
   ];
-
   const [shapes, setShapes] = useState(initialShapes);
 
   const moveShapeLeft = () => {
@@ -39,41 +40,90 @@ function ShapeGrid() {
     setShapes([...bottom, ...top]);
   };
 
+  const topButtons = [
+    {
+      id: 0,
+      label: t("moveShape"),
+      onClick: moveShapeLeft,
+      render: () => <div className="triangle-left" />,
+    },
+    {
+      id: 1,
+      label: t("movePosition"),
+      onClick: movePosition,
+      render: () => (
+        <div style={{ display: "flex", gap: 8 }}>
+          <div className="triangle-up" />
+          <div className="triangle-down" />
+        </div>
+      ),
+    },
+    {
+      id: 2,
+      label: t("moveShape"),
+      onClick: moveShapeRight,
+      render: () => <div className="triangle-right" />,
+    },
+  ];
+
   return (
     <div style={{ padding: 20 }}>
       <h2>{t("layoutStyle")}</h2>
 
       {/* 🔷 ปุ่มด้านบน */}
-      <Row gutter={16} style={{ marginBottom: 20 }}>
-        <Col span={8}>
-          <div style={topBoxStyle} onClick={moveShapeLeft}>
-            <div className="triangle-left" />
-            <span style={topTextStyle}>{t("moveShape")}</span>
-          </div>
-        </Col>
-
-        <Col span={8}>
-          <div style={topBoxStyle} onClick={movePosition}>
-            <div style={{ display: "flex", gap: 8 }}>
-              <div className="triangle-up" />
-              <div className="triangle-down" />
+      <Row gutter={16} style={{ marginBottom: 16 }}>
+        {topButtons.map((btn) => (
+          <Col span={8} key={btn.id}>
+            <div
+              style={{
+                ...topBoxStyle,
+                background: activeTop === btn.id ? "#6eda78" : "#fff",
+              }}
+              onClick={() => {
+                setActiveTop(btn.id);
+                btn.onClick();
+              }}
+              onMouseEnter={(e) => {
+                if (activeTop !== btn.id) {
+                  e.currentTarget.style.background = "#ffa200";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (activeTop !== btn.id) {
+                  e.currentTarget.style.background = "#fff";
+                }
+              }}
+            >
+              {btn.render()}
+              <span style={topTextStyle}>{btn.label}</span>
             </div>
-            <span style={topTextStyle}>{t("movePosition")}</span>
-          </div>
-        </Col>
-
-        <Col span={8}>
-          <div style={topBoxStyle} onClick={moveShapeRight}>
-            <div className="triangle-right" />
-            <span style={topTextStyle}>{t("moveShape")}</span>
-          </div>
-        </Col>
+          </Col>
+        ))}
       </Row>
 
       {/* 🔶 grid ด้านล่าง */}
       <div style={gridStyle}>
         {shapes.map((shape, i) => (
-          <div key={i} style={bottomBoxStyle}>
+          <div
+            style={{
+              ...bottomBoxStyle,
+              background: activeIndex === i ? "#6eda78" : "#fff",
+            }}
+            onClick={() => {
+              setActiveIndex(i);
+              shuffle();
+            }}
+            onMouseEnter={(e) => {
+              if (activeIndex !== i) {
+                e.currentTarget.style.background = "#ffa200"; // ✅ hover = ส้ม
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeIndex !== i) {
+                e.currentTarget.style.background = "#fff";
+              }
+            }}
+          >
             <div className={shape} />
           </div>
         ))}

@@ -31,13 +31,22 @@ function App() {
   }, [items, isLoaded]);
 
   return (
-    <div style={{ padding: 20 }}>
-      <LanguageSwitcher />
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(to top right, #6eda78, #ffa200)",
+      }}
+    >
+      <div style={{ padding: 20, maxWidth: 900, margin: "0 auto" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <LanguageSwitcher />
+        </div>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shape" element={<ShapePage />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shape" element={<ShapePage />} />
+        </Routes>
+      </div>
     </div>
   );
 }
