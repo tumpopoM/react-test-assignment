@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { addItem, deleteItem, updateItem, setItems } from "./store/itemSlice";
 import { v4 as uuidv4 } from "uuid";
 import type { RootState } from "./store/store";
+import ItemForm from "./components/ItemForm";
+import ItemTable from "./components/ItemTable";
 
 type FormValues = {
   name: string;
@@ -16,12 +18,6 @@ function App() {
   const [editingItemId, setEditingItemId] = useState<any>(null);
   const items = useSelector((state: RootState) => state.items.items);
   const [isLoaded, setIsLoaded] = useState(false);
-
-  const rowSelection = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
-      console.log(selectedRowKeys, selectedRows);
-    },
-  };
 
   useEffect(() => {
     const data = localStorage.getItem("items");
@@ -44,7 +40,7 @@ function App() {
     if (editingItemId) {
       dispatch(
         updateItem({
-          id: uuidv4(),
+          id: editingItemId,
           name: values.name,
           age: values.age,
         }),
@@ -106,29 +102,18 @@ function App() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h2>Add Item</h2>
+      <ItemForm form={form} onFinish={onFinish} editingItemId={editingItemId} />
 
-      <Form form={form} layout="vertical" onFinish={onFinish}>
-        <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item name="age" label="Age" rules={[{ required: true }]}>
-          <InputNumber style={{ width: "100%" }} />
-        </Form.Item>
-
-        <Button type="primary" htmlType="submit">
-          {editingItemId ? "Update" : "Submit"}
-        </Button>
-      </Form>
-
-      <h2 style={{ marginTop: 40 }}>Items List</h2>
-      <Table
-        rowSelection={rowSelection}
-        dataSource={items}
-        columns={columns}
-        rowKey="id"
-        pagination={{ pageSize: 5 }}
+      <ItemTable
+        items={items}
+        onEdit={(record) => {
+          setEditingItemId(record.id);
+          form.setFieldsValue({
+            name: record.name,
+            age: record.age,
+          });
+        }}
+        onDelete={(id) => dispatch(deleteItem(id))}
       />
     </div>
   );
