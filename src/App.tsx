@@ -17,6 +17,12 @@ function App() {
   const items = useSelector((state: RootState) => state.items.items);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const rowSelection = {
+    onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
+      console.log(selectedRowKeys, selectedRows);
+    },
+  };
+
   useEffect(() => {
     const data = localStorage.getItem("items");
 
@@ -117,7 +123,13 @@ function App() {
       </Form>
 
       <h2 style={{ marginTop: 40 }}>Items List</h2>
-      <Table dataSource={items} columns={columns} rowKey="id" />
+      <Table
+        rowSelection={rowSelection}
+        dataSource={items}
+        columns={columns}
+        rowKey="id"
+        pagination={{ pageSize: 5 }}
+      />
     </div>
   );
 }
