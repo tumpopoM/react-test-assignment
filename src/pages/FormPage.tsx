@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPersons } from "../store/personSlice";
 import type { RootState } from "../store/store";
 import { useEffect, useState } from "react";
-import LanguageSwitcher from "../components/LanguageSwitcher";
+import { Form } from "antd";
 
 function FormPage() {
   const navigate = useNavigate();
@@ -48,88 +48,146 @@ function FormPage() {
       <h2>{t("formTable")}</h2>
 
       {/* 🔹 Form Box */}
-      <div
+      <Form
+        layout="vertical"
         style={{
           border: "1px solid #333",
           borderRadius: 10,
           padding: 20,
           maxWidth: 900,
+          gap: 0,
         }}
       >
         <Row gutter={16}>
           <Col span={6}>
-            <label>* {t("title")}</label>
-            <Select
-              style={{ width: "100%" }}
-              options={[
-                { value: "mr", label: "Mr." },
-                { value: "ms", label: "Ms." },
-              ]}
-            />
+            <Form.Item
+              label={t("title")}
+              name="title"
+              rules={[{ required: true }]}
+              style={{ marginBottom: 10 }}
+            >
+              <Select
+                style={{ width: "100%" }}
+                options={[
+                  { value: "mr", label: "Mr." },
+                  { value: "ms", label: "Ms." },
+                ]}
+              />
+            </Form.Item>
           </Col>
 
           <Col span={9}>
-            <label>* {t("firstname")}</label>
-            <Input />
+            <Form.Item
+              label={t("firstname")}
+              name="firstname"
+              rules={[{ required: true }]}
+              style={{ marginBottom: 10 }}
+            >
+              <Input />
+            </Form.Item>
           </Col>
 
           <Col span={9}>
-            <label>* {t("lastname")}</label>
-            <Input />
+            <Form.Item
+              label={t("lastname")}
+              name="lastname"
+              rules={[{ required: true }]}
+              style={{ marginBottom: 10 }}
+            >
+              <Input />
+            </Form.Item>
           </Col>
         </Row>
 
-        <Row gutter={16} style={{ marginTop: 10 }}>
+        <Row gutter={16}>
           <Col span={8}>
-            <label>* {t("birthday")}</label>
-            <DatePicker style={{ width: "100%" }} />
+            <Form.Item
+              label={t("birthday")}
+              name="birthday"
+              rules={[{ required: true }]}
+              style={{ marginBottom: 10 }}
+            >
+              <DatePicker style={{ width: "100%" }} />
+            </Form.Item>
           </Col>
 
           <Col span={16}>
-            <label>* {t("nationality")}</label>
-            <Select
-              style={{ width: "100%" }}
-              options={[{ value: "thai", label: "Thai" }]}
-            ></Select>
+            <Form.Item
+              label={t("nationality")}
+              name="nationality"
+              rules={[{ required: true }]}
+              style={{ marginBottom: 10 }}
+            >
+              <Select
+                style={{ width: "100%" }}
+                options={[{ value: "thai", label: "Thai" }]}
+              />
+            </Form.Item>
           </Col>
         </Row>
 
-        <Row style={{ marginTop: 10 }}>
+        <Row>
           <Col span={24}>
-            <label>* {t("gender")}</label>
-            <Radio.Group>
-              <Radio value="male">Male</Radio>
-              <Radio value="female">Female</Radio>
-              <Radio value="unsex">Unsex</Radio>
-            </Radio.Group>
+            <Form.Item
+              label={t("gender")}
+              name="gender"
+              rules={[{ required: true }]}
+              style={{ marginBottom: 10 }}
+            >
+              <Radio.Group>
+                <Radio value="male">Male</Radio>
+                <Radio value="female">Female</Radio>
+                <Radio value="unsex">Unsex</Radio>
+              </Radio.Group>
+            </Form.Item>
           </Col>
         </Row>
 
-        <Row gutter={16} style={{ marginTop: 10 }}>
-          <Col span={8}>
-            <label>* {t("phone")}</label>
-            <Select style={{ width: "100%" }}>
-              <Option value="+66">+66</Option>
-            </Select>
-          </Col>
+        <Form.Item label={t("phone")} required style={{ marginBottom: 10 }}>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Form.Item name="phoneCode" noStyle rules={[{ required: true }]}>
+                <Select
+                  style={{ width: "100%" }}
+                  options={[{ value: "+66", label: "+66" }]}
+                />
+              </Form.Item>
+            </Col>
 
-          <Col span={16}>
-            <label>&nbsp;</label>
-            <Input />
-          </Col>
-        </Row>
+            <Col span={16}>
+              <Form.Item
+                name="phoneNumber"
+                noStyle
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form.Item>
 
-        <Row style={{ marginTop: 10 }}>
+        <Row>
           <Col span={24}>
-            <label>{t("passport")}</label>
-            <Input />
+            <Form.Item
+              label={t("passport")}
+              name="passport"
+              style={{ marginBottom: 10 }}
+            >
+              <Input />
+            </Form.Item>
           </Col>
         </Row>
 
-        <Row style={{ marginTop: 10 }}>
+        <Row>
           <Col span={12}>
-            <label>* {t("salary")}</label>
-            <Input />
+            <Form.Item
+              label={t("salary")}
+              name="salary"
+              rules={[{ required: true }]}
+              style={{ marginBottom: 10 }}
+            >
+              <Input />
+            </Form.Item>
           </Col>
         </Row>
 
@@ -138,7 +196,7 @@ function FormPage() {
           <Button>{t("reset")}</Button>
           <Button type="primary">{t("submit")}</Button>
         </Row>
-      </div>
+      </Form>
 
       {/* 🔹 Action */}
       <div style={{ marginTop: 20 }}>
