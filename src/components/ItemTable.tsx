@@ -1,4 +1,5 @@
 import { Table, Space, Button } from "antd";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   items: any[];
@@ -7,6 +8,7 @@ type Props = {
 };
 
 function ItemTable({ items, onEdit, onDelete }: Props) {
+  const { t } = useTranslation();
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
       console.log(selectedRowKeys, selectedRows);
@@ -15,23 +17,23 @@ function ItemTable({ items, onEdit, onDelete }: Props) {
 
   const columns = [
     {
-      title: "Name",
+      title: t("name"),
       dataIndex: "name",
     },
     {
-      title: "Age",
+      title: t("age"),
       dataIndex: "age",
     },
     {
-      title: "Action",
+      title: t("action"),
       render: (_: any, record: any) => (
         <Space>
           <Button type="primary" onClick={() => onEdit(record)}>
-            Edit
+            {t("edit")}
           </Button>
 
           <Button danger onClick={() => onDelete(record.id)}>
-            Delete
+            {t("delete")}
           </Button>
         </Space>
       ),
@@ -40,7 +42,7 @@ function ItemTable({ items, onEdit, onDelete }: Props) {
 
   return (
     <>
-      <h2 style={{ marginTop: 40 }}>Items List</h2>
+      <h2 style={{ marginTop: 40 }}>{t("itemList")}</h2>
 
       <Table
         rowSelection={rowSelection}

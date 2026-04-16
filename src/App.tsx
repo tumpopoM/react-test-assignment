@@ -1,4 +1,4 @@
-import { Form, Input, Button, InputNumber, Table, Space } from "antd";
+import { Form, Button, Space } from "antd";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, deleteItem, updateItem, setItems } from "./store/itemSlice";
@@ -6,6 +6,8 @@ import { v4 as uuidv4 } from "uuid";
 import type { RootState } from "./store/store";
 import ItemForm from "./components/ItemForm";
 import ItemTable from "./components/ItemTable";
+import i18n from "./i18n";
+import LanguageSwitcher from "./components/LanguageSwitcher";
 
 type FormValues = {
   name: string;
@@ -58,50 +60,10 @@ function App() {
     form.resetFields();
   };
 
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (_: any, record: any) => (
-        <Space size="middle">
-          <Button
-            type="primary"
-            onClick={() => {
-              setEditingItemId(record.id);
-              form.setFieldsValue({
-                name: record.name,
-                age: record.age,
-              });
-              setEditingItemId(record.id);
-            }}
-          >
-            Edit
-          </Button>
-
-          <Button
-            type="primary"
-            danger
-            onClick={() => dispatch(deleteItem(record.id))}
-          >
-            Delete
-          </Button>
-        </Space>
-      ),
-    },
-  ];
-
   return (
     <div style={{ padding: 20 }}>
+      <LanguageSwitcher />
+
       <ItemForm form={form} onFinish={onFinish} editingItemId={editingItemId} />
 
       <ItemTable
