@@ -2,12 +2,14 @@ import { Button, Row, Col, Input, Select, DatePicker, Radio } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { setPersons } from "../store/personSlice";
+import { setPersons, addPerson } from "../store/personSlice";
 import type { RootState } from "../store/store";
 import { useEffect, useState } from "react";
-import { Form } from "antd";
+import { Form, message } from "antd";
+import { v4 as uuidv4 } from "uuid";
 
 function FormPage() {
+  const [form] = Form.useForm();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -31,6 +33,27 @@ function FormPage() {
     }
   }, [persons, isLoaded]);
 
+  const onFinish = (values: any) => {
+    const newPerson = {
+      id: uuidv4(),
+      title: values.title,
+      firstname: values.firstname,
+      lastname: values.lastname,
+      gender: values.gender,
+      phone: `${values.phoneCode}${values.phoneNumber}`,
+      nationality: values.nationality,
+    };
+
+    dispatch(addPerson(newPerson));
+
+    message.success("Save success");
+
+    form.resetFields();
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("FAILED:", errorInfo);
+  };
   return (
     <div style={{ marginTop: 20 }}>
       {/* 🔹 Header */}
@@ -49,6 +72,7 @@ function FormPage() {
 
       {/* 🔹 Form Box */}
       <Form
+        form={form}
         layout="vertical"
         style={{
           border: "1px solid #333",
@@ -57,6 +81,8 @@ function FormPage() {
           maxWidth: 900,
           gap: 0,
         }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
       >
         <Row gutter={16}>
           <Col span={6}>
@@ -143,28 +169,32 @@ function FormPage() {
           </Col>
         </Row>
 
-        <Form.Item label={t("phone")} required style={{ marginBottom: 10 }}>
-          <Row gutter={16}>
-            <Col span={8}>
-              <Form.Item name="phoneCode" noStyle rules={[{ required: true }]}>
-                <Select
-                  style={{ width: "100%" }}
-                  options={[{ value: "+66", label: "+66" }]}
-                />
-              </Form.Item>
-            </Col>
+        <Row gutter={16}>
+          <Col span={8}>
+            <Form.Item
+              label={t("phone")}
+              name="phoneCode"
+              rules={[{ required: true }]}
+              style={{ marginBottom: 10 }}
+            >
+              <Select
+                style={{ width: "100%" }}
+                options={[{ value: "+66", label: "+66" }]}
+              />
+            </Form.Item>
+          </Col>
 
-            <Col span={16}>
-              <Form.Item
-                name="phoneNumber"
-                noStyle
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form.Item>
+          <Col span={16}>
+            <Form.Item
+              label=" "
+              name="phoneNumber"
+              rules={[{ required: true }]}
+              style={{ marginBottom: 10 }}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+        </Row>
 
         <Row>
           <Col span={24}>
@@ -193,8 +223,10 @@ function FormPage() {
 
         {/* 🔹 Buttons */}
         <Row justify="end" style={{ marginTop: 20, gap: 10 }}>
-          <Button>{t("reset")}</Button>
-          <Button type="primary">{t("submit")}</Button>
+          <Button onClick={() => form.resetFields()}>{t("reset")}</Button>
+          <Button type="primary" htmlType="submit">
+            {t("submit")}
+          </Button>
         </Row>
       </Form>
 
