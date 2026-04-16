@@ -66,6 +66,39 @@ function ShapeGrid() {
     },
   ];
 
+  const shuffle = () => {
+    const newArr = [...shapes].sort(() => Math.random() - 0.5);
+    setShapes(newArr);
+  };
+
+  const getCardStyle = (index: number) => ({
+    ...bottomBoxStyle,
+    background: activeIndex === index ? "#6eda78" : "#fff",
+  });
+
+  const handleCardClick = (index: number) => {
+    setActiveIndex(index);
+    shuffle();
+  };
+
+  const handleCardHover = (
+    e: React.MouseEvent<HTMLDivElement>,
+    index: number,
+  ) => {
+    if (activeIndex !== index) {
+      e.currentTarget.style.background = "#ffa200";
+    }
+  };
+
+  const handleCardLeave = (
+    e: React.MouseEvent<HTMLDivElement>,
+    index: number,
+  ) => {
+    if (activeIndex !== index) {
+      e.currentTarget.style.background = "#fff";
+    }
+  };
+
   return (
     <div style={{ padding: 20 }}>
       <h2>{t("layoutStyle")}</h2>
@@ -105,24 +138,11 @@ function ShapeGrid() {
       <div style={gridStyle}>
         {shapes.map((shape, i) => (
           <div
-            style={{
-              ...bottomBoxStyle,
-              background: activeIndex === i ? "#6eda78" : "#fff",
-            }}
-            onClick={() => {
-              setActiveIndex(i);
-              shuffle();
-            }}
-            onMouseEnter={(e) => {
-              if (activeIndex !== i) {
-                e.currentTarget.style.background = "#ffa200"; // ✅ hover = ส้ม
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (activeIndex !== i) {
-                e.currentTarget.style.background = "#fff";
-              }
-            }}
+            key={shape}
+            style={getCardStyle(i)}
+            onClick={() => handleCardClick(i)}
+            onMouseEnter={(e) => handleCardHover(e, i)}
+            onMouseLeave={(e) => handleCardLeave(e, i)}
           >
             <div className={shape} />
           </div>
