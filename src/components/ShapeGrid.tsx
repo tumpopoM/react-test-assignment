@@ -1,75 +1,118 @@
+import { Row, Col } from "antd";
+import "./ShapeGrid.css";
 import { useState } from "react";
-import { Card, Button, Row, Col } from "antd";
-
-const initialShapes = ["A", "B", "C", "D", "E", "F"];
+import { useTranslation } from "react-i18next";
 
 function ShapeGrid() {
-  const [shapes, setShapes] = useState(initialShapes);
-  const [rotating, setRotating] = useState(false);
+  const { t } = useTranslation();
+  const initialShapes = [
+    "square",
+    "circle",
+    "oval",
+    "trapezoid",
+    "parallelogram",
+    "rectangle",
+  ];
 
-  const moveShape = () => {
+  const [shapes, setShapes] = useState(initialShapes);
+
+  const moveShapeLeft = () => {
     const newArr = [...shapes];
     const first = newArr.shift();
     if (first) newArr.push(first);
 
-    setRotating(true);
-    setTimeout(() => setRotating(false), 300);
+    setShapes(newArr);
+  };
+
+  const moveShapeRight = () => {
+    const newArr = [...shapes];
+    const last = newArr.pop();
+    if (last) newArr.unshift(last);
 
     setShapes(newArr);
   };
 
   const movePosition = () => {
-    setShapes([...shapes].reverse());
-  };
+    const top = shapes.slice(0, 3);
+    const bottom = shapes.slice(3, 6);
 
-  const shuffle = () => {
-    const newArr = [...shapes].sort(() => Math.random() - 0.5);
-    setShapes(newArr);
+    setShapes([...bottom, ...top]);
   };
 
   return (
-    <div style={{ marginBottom: 40 }}>
-      <h2>Shape Controls</h2>
+    <div style={{ padding: 20 }}>
+      <h2>{t("layoutStyle")}</h2>
 
+      {/* 🔷 ปุ่มด้านบน */}
       <Row gutter={16} style={{ marginBottom: 20 }}>
-        <Col>
-          <Button onClick={moveShape}>Move Shape</Button>
+        <Col span={8}>
+          <div style={topBoxStyle} onClick={moveShapeLeft}>
+            <div className="triangle-left" />
+            <span style={topTextStyle}>{t("moveShape")}</span>
+          </div>
         </Col>
 
-        <Col>
-          <Button onClick={movePosition}>Move Position</Button>
+        <Col span={8}>
+          <div style={topBoxStyle} onClick={movePosition}>
+            <div style={{ display: "flex", gap: 8 }}>
+              <div className="triangle-up" />
+              <div className="triangle-down" />
+            </div>
+            <span style={topTextStyle}>{t("movePosition")}</span>
+          </div>
+        </Col>
+
+        <Col span={8}>
+          <div style={topBoxStyle} onClick={moveShapeRight}>
+            <div className="triangle-right" />
+            <span style={topTextStyle}>{t("moveShape")}</span>
+          </div>
         </Col>
       </Row>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: 10,
-        }}
-      >
-        {shapes.map((shape, index) => (
-          <Card
-            key={shape}
-            onClick={shuffle}
-            style={{
-              textAlign: "center",
-              cursor: "pointer",
-              background: index % 2 === 0 ? "#ffa200" : "#6eda78",
-              transform: rotating
-                ? "rotate(-180deg) scale(1.05)"
-                : "rotate(0deg) scale(1)",
-              transition: "transform 0.3s",
-              borderRadius: 12,
-              fontWeight: "bold",
-              willChange: "transform",
-            }}
-          >
-            {shape}
-          </Card>
+
+      {/* 🔶 grid ด้านล่าง */}
+      <div style={gridStyle}>
+        {shapes.map((shape, i) => (
+          <div key={i} style={bottomBoxStyle}>
+            <div className={shape} />
+          </div>
         ))}
       </div>
     </div>
   );
 }
+
+const topBoxStyle = {
+  height: 120,
+  background: "#eee",
+  borderRadius: 12,
+  display: "flex",
+  flexDirection: "column" as const,
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 8,
+};
+
+const bottomBoxStyle = {
+  height: 100,
+  background: "#eee",
+  borderRadius: 12,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+const gridStyle = {
+  display: "grid",
+  gridTemplateColumns: "repeat(3, 1fr)",
+  gap: 16,
+};
+
+const topTextStyle = {
+  background: "#6eda78",
+  padding: "2px 10px",
+  borderRadius: 12,
+  fontSize: 12,
+};
 
 export default ShapeGrid;

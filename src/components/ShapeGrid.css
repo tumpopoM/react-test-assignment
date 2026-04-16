@@ -1,0 +1,82 @@
+/* 🔺 Triangle Up */
+.triangle-up {
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 50px solid gray;
+}
+
+/* 🔻 Triangle Down */
+.triangle-down {
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-top: 50px solid gray;
+}
+
+/* ◀ Triangle Left */
+.triangle-left {
+  width: 0;
+  height: 0;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-right: 50px solid gray;
+}
+
+/* ▶ Triangle Right */
+.triangle-right {
+  width: 0;
+  height: 0;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-left: 50px solid gray;
+}
+
+/* ⬛ Square */
+.square {
+  width: 60px;
+  height: 60px;
+  background: gray;
+}
+
+/* ⚪ Circle */
+.circle {
+  width: 60px;
+  height: 60px;
+  background: gray;
+  border-radius: 50%;
+}
+
+/* ⭕ Oval */
+.oval {
+  width: 100px;
+  height: 60px;
+  background: gray;
+  border-radius: 50%;
+}
+
+/* ▱ Parallelogram */
+.parallelogram {
+  width: 100px;
+  height: 60px;
+  background: gray;
+  transform: skew(20deg);
+}
+
+/* ⏢ Trapezoid */
+.trapezoid {
+  width: 100px;
+  height: 0;
+  border-bottom: 60px solid gray;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+}
+
+/* ▭ Rectangle */
+.rectangle {
+  width: 120px;
+  height: 60px;
+  background: gray;
+}
