@@ -1,4 +1,4 @@
-import { Form, Button, Space } from "antd";
+import { Form } from "antd";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, deleteItem, updateItem, setItems } from "./store/itemSlice";
@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import type { RootState } from "./store/store";
 import ItemForm from "./components/ItemForm";
 import ItemTable from "./components/ItemTable";
-import i18n from "./i18n";
+import ShapeGrid from "./components/ShapeGrid";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 
 type FormValues = {
@@ -63,6 +63,10 @@ function App() {
   return (
     <div style={{ padding: 20 }}>
       <LanguageSwitcher />
+
+      <div style={{ marginBottom: 40 }}>
+        <ShapeGrid />
+      </div>
 
       <ItemForm form={form} onFinish={onFinish} editingItemId={editingItemId} />
 
