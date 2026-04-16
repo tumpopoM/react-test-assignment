@@ -6,6 +6,7 @@ import { setItems } from "./store/itemSlice";
 import Home from "./pages/Home";
 import ShapePage from "./pages/ShapePage";
 import LanguageSwitcher from "./components/LanguageSwitcher";
+import FormPage from "./pages/FormPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shape" element={<ShapePage />} />
+          <Route path="/form" element={<FormPage />} />
         </Routes>
       </div>
     </div>
