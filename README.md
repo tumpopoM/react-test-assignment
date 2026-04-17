@@ -59,21 +59,27 @@
 ```id="th-structure"
 src/
 ├── components/
+│   ├── LanguageSwitcher.tsx
 │   ├── PersonForm.tsx
 │   ├── PersonTable.tsx
 │
 ├── hooks/
 │   └── usePersonForm.ts
 │
+├── pages/
+│   ├── FormPage.tsx
+│   ├── Home.tsx
+│   └── ShapePage.tsx
+│
 ├── store/
-│   └── personSlice.ts
+│   ├── personSlice.ts
+│   ├── itemSlice.ts
+│   └── store.ts
 │
 ├── utils/
 │   └── validation.ts
 │
-├── i18n/
-│   ├── en.ts
-│   └── th.ts
+├── i18n.ts
 ```
 
 ---
