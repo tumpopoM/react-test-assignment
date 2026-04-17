@@ -34,8 +34,10 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
   const { t } = useTranslation();
   const citizenRefs = useRef<(InputRef | null)[]>([]);
 
+  const citizenMaxLengths = [1, 4, 5, 2, 1];
+
   const handleCitizenChange = (value: string, index: number) => {
-    if (value.length > 0 && index < citizenRefs.current.length - 1) {
+    if (value.length === citizenMaxLengths[index]) {
       citizenRefs.current[index + 1]?.focus();
     }
   };
@@ -172,14 +174,14 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
 
       <Row gutter={8}>
         <Col span={24}>
-          <Form.Item label={t("citizenId")} style={{ marginBottom: 10 }}>
+          <Form.Item
+            label={t("citizenId")}
+            rules={[citizenIdRule(t)]}
+            style={{ marginBottom: 10 }}
+          >
             <Row gutter={8}>
               <Col span={2}>
-                <Form.Item
-                  name={["citizenId", 0]}
-                  style={{ marginBottom: 0 }}
-                  rules={[citizenIdRule(t)]}
-                >
+                <Form.Item name={["citizenId", 0]} style={{ marginBottom: 0 }}>
                   <Input
                     maxLength={1}
                     ref={(el) => {

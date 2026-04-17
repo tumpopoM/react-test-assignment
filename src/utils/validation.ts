@@ -23,9 +23,20 @@ export const passportRule = (t: any) => ({
 
 export const citizenIdRule = (t: any) => ({
   validator: (_: any, value: string[]) => {
-    if (!value || value.join("").length !== 13) {
+    if (!value) {
       return Promise.reject(new Error(t("invalidCitizenId")));
     }
+
+    const citizen = value.join("").trim();
+
+    if (citizen.length !== 13) {
+      return Promise.reject(new Error(t("invalidCitizenId")));
+    }
+
+    if (!/^[0-9]+$/.test(citizen)) {
+      return Promise.reject(new Error(t("numberOnly")));
+    }
+
     return Promise.resolve();
   },
 });
