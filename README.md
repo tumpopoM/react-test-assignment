@@ -1,73 +1,110 @@
-# React + TypeScript + Vite
+# 📌 React SPA - ระบบจัดการข้อมูลบุคคล
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+แอปพลิเคชันแบบ Single Page Application (SPA) พัฒนาด้วย React และ Ant Design สำหรับจัดการข้อมูลบุคคล โดยรองรับการทำงานแบบ CRUD ครบถ้วน พร้อม validation และรองรับหลายภาษา (i18n)
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 ความสามารถหลัก
 
-## React Compiler
+### 🧾 การจัดการฟอร์ม
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- เพิ่ม แก้ไข และลบข้อมูลบุคคล (Create / Edit / Delete)
+- มีการตรวจสอบข้อมูล (Validation) แบบ reusable
+- ช่องกรอกเลขบัตรประชาชนแบบแยกช่อง พร้อม auto focus และ validation
+- รองรับการกรอกเบอร์โทรพร้อมรหัสประเทศ (Phone Code)
+- ช่องเงินเดือนมีการ format ตัวเลข (comma)
+- วันเกิดไม่สามารถเลือกวันปัจจุบันหรืออนาคตได้
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 📊 การแสดงผลตาราง
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- แสดงข้อมูลในรูปแบบตาราง
+- รองรับ Pagination
+- รองรับการ Sort (รวมถึงเบอร์โทร)
+- สามารถเลือกหลายรายการ (Row Selection)
+- ลบข้อมูลได้ทั้งรายรายการและหลายรายการ
+- มี Popconfirm ก่อนการลบ
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 🌍 รองรับหลายภาษา (i18n)
+
+- รองรับภาษาไทยและภาษาอังกฤษ
+- เปลี่ยนภาษาได้แบบ real-time
+- Validation message เปลี่ยนตามภาษาอัตโนมัติ
+
+---
+
+### 💾 การจัดเก็บข้อมูล
+
+- ใช้ Local Storage ในการเก็บข้อมูล
+- Refresh หน้าแล้วข้อมูลไม่หาย
+
+---
+
+## 🧠 เทคโนโลยีที่ใช้
+
+- React (Functional Components + Hooks)
+- TypeScript
+- Ant Design (UI Library)
+- Redux Toolkit (State Management)
+- i18next (Internationalization)
+- dayjs (จัดการวันที่)
+
+---
+
+## 📂 โครงสร้างโปรเจค
+
+```id="th-structure"
+src/
+├── components/
+│   ├── PersonForm.tsx
+│   ├── PersonTable.tsx
+│
+├── hooks/
+│   └── usePersonForm.ts
+│
+├── store/
+│   └── personSlice.ts
+│
+├── utils/
+│   └── validation.ts
+│
+├── i18n/
+│   ├── en.ts
+│   └── th.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ⚙️ การติดตั้งและรันโปรเจค
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash id="th-install"
+npm install
+npm start
 ```
+
+---
+
+## ✨ รายละเอียดการพัฒนา
+
+- แยก business logic ออกจาก UI โดยใช้ custom hook (`usePersonForm`)
+- รวม validation ไว้ในที่เดียวเพื่อให้สามารถ reuse ได้
+- ใช้ Redux Toolkit ในการจัดการ state ของข้อมูล
+- รองรับ i18n แบบ dynamic รวมถึง validation message
+- โค้ดถูกออกแบบให้แยกส่วน (Separation of Concerns) ชัดเจน
+
+---
+
+## 📌 หมายเหตุ
+
+- เน้นโครงสร้างโค้ดที่อ่านง่ายและสามารถต่อยอดได้
+- มีการออกแบบ UX เช่น validation feedback และ confirm dialog
+- UI บางส่วนสามารถปรับปรุงเพิ่มเติมได้ในรายละเอียดเล็กน้อย
+
+---
+
+## 👤 ผู้พัฒนา
+
+พัฒนาขึ้นเพื่อใช้ในการทำ Frontend Assignment โดยใช้ React และ Ant Design
