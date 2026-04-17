@@ -147,7 +147,11 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
           >
             <Select
               style={{ width: "100%" }}
-              options={[{ value: "Thai", label: "Thai" }]}
+              options={[
+                { value: "Thai", label: "Thai" },
+                { value: "American", label: "American" },
+                { value: "Japanese", label: "Japanese" },
+              ]}
             />
           </Form.Item>
         </Col>

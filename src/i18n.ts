@@ -37,6 +37,8 @@ i18n.use(initReactI18next).init({
         phone: "Phone",
         selectAll: "Select All",
         formTable: "Form & Table",
+        updateSuccess: "Update successful",
+        saveSuccess: "Save successful",
       },
     },
     th: {
@@ -73,6 +75,8 @@ i18n.use(initReactI18next).init({
         phone: "โทรศัพท์",
         selectAll: "เลือกทั้งหมด",
         formTable: "ฟอร์มและตาราง",
+        updateSuccess: "อัปเดตสำเร็จ",
+        saveSuccess: "บันทึกสำเร็จ",
       },
     },
   },

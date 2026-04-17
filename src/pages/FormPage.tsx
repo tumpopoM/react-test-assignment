@@ -1,4 +1,4 @@
-import { Button, Table } from "antd";
+import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,6 +44,21 @@ function FormPage() {
     }
   }, [persons, isLoaded]);
 
+  const normalizePhone = (number: string) => {
+    return number.replace(/^0+/, "");
+  };
+
+  const formatPhone = (code: string, number: string) => {
+    if (!number) return "";
+
+    if (code === "+66") {
+      const cleaned = normalizePhone(number);
+      return "0" + cleaned;
+    }
+
+    return number;
+  };
+
   const onFinish = (values: any) => {
     const newPerson = {
       id: editingId || uuidv4(),
@@ -51,23 +66,26 @@ function FormPage() {
       firstname: values.firstname,
       lastname: values.lastname,
       gender: values.gender,
-      phone: `${values.phoneCode}${values.phoneNumber}`,
+      phoneCode: values.phoneCode,
+      phone: formatPhone(values.phoneCode, values.phoneNumber),
       nationality: values.nationality,
       passport: values.passport,
-      salary: values.salary,
-      birthday: values.birthday.format("YYYY-MM-DD"),
+      salary: Number(values.salary),
+      birthday: values.birthday ? values.birthday.format("YYYY-MM-DD") : null,
     };
 
     if (editingId) {
       dispatch(updatePerson(newPerson));
-      message.success("Update success");
+      message.success(t("updateSuccess"));
     } else {
       dispatch(addPerson(newPerson));
-      message.success("Save success");
+      message.success(t("saveSuccess"));
     }
 
     setEditingId(null);
     form.resetFields();
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -80,64 +98,6 @@ function FormPage() {
       setSelectedRowKeys(keys as string[]);
     },
   };
-
-  const columns = [
-    {
-      title: t("name"),
-      dataIndex: "name",
-      render: (_: any, record: any) => `${record.firstname} ${record.lastname}`,
-      sorter: (a: any, b: any) => a.firstname.localeCompare(b.firstname),
-    },
-    {
-      title: t("gender"),
-      dataIndex: "gender",
-      sorter: (a: any, b: any) => a.gender.localeCompare(b.gender),
-    },
-    {
-      title: t("mobile"),
-      dataIndex: "phone",
-    },
-    {
-      title: t("nationality"),
-      dataIndex: "nationality",
-      sorter: (a: any, b: any) => a.nationality.localeCompare(b.nationality),
-    },
-    {
-      title: t("manage"),
-      render: (_: any, record: any) => (
-        <>
-          <a
-            onClick={() => {
-              setEditingId(record.id);
-
-              form.setFieldsValue({
-                title: record.title,
-                firstname: record.firstname,
-                lastname: record.lastname,
-                gender: record.gender,
-                nationality: record.nationality,
-                phoneCode: record.phone?.slice(0, 3),
-                phoneNumber: record.phone?.slice(3),
-                passport: record.passport,
-                salary: record.salary,
-                birthday: record.birthday ? dayjs(record.birthday) : null,
-              });
-            }}
-          >
-            {t("edit")}
-          </a>{" "}
-          |{" "}
-          <a
-            onClick={() => {
-              dispatch(deletePerson(record.id));
-            }}
-          >
-            {t("delete")}
-          </a>
-        </>
-      ),
-    },
-  ];
 
   return (
     <div style={{ marginTop: 20 }}>
@@ -205,8 +165,11 @@ function FormPage() {
               lastname: record.lastname,
               gender: record.gender,
               nationality: record.nationality,
-              phoneCode: record.phone?.slice(0, 3),
-              phoneNumber: record.phone?.slice(3),
+              phoneCode: record.phoneCode || "+66",
+              phoneNumber:
+                record.phoneCode === "+66"
+                  ? normalizePhone(record.phone)
+                  : record.phone,
               passport: record.passport,
               salary: record.salary,
               birthday: record.birthday ? dayjs(record.birthday) : null,
