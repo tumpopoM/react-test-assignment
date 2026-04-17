@@ -63,9 +63,10 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
   return (
     <Form
       form={form}
-      layout="vertical"
+      layout="horizontal"
       style={{
-        border: "1px solid #333",
+        background: "#fff",
+        border: "1px solid #e2e2e2",
         borderRadius: 10,
         padding: 20,
         maxWidth: 900,
@@ -132,7 +133,7 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
             <DatePicker
               style={{ width: "100%" }}
               disabledDate={(current) =>
-                current && current > dayjs().endOf("day")
+                current && current > dayjs().startOf("day")
               }
             />
           </Form.Item>
@@ -157,6 +158,139 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
         </Col>
       </Row>
 
+      <Row gutter={8}>
+        <Col span={24}>
+          <Form.Item label={t("citizenId")} style={{ marginBottom: 10 }}>
+            <Row gutter={8}>
+              <Col span={2}>
+                <Form.Item name={["citizenId", 0]} style={{ marginBottom: 0 }}>
+                  <Input
+                    maxLength={1}
+                    onKeyDown={(e) => {
+                      if (
+                        !/[0-9]/.test(e.key) &&
+                        e.key !== "Backspace" &&
+                        e.key !== "Tab"
+                      ) {
+                        e.preventDefault();
+                      }
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+
+              <span
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  margin: "0 8px",
+                }}
+              >
+                -
+              </span>
+
+              <Col span={4}>
+                <Form.Item name={["citizenId", 1]} style={{ marginBottom: 0 }}>
+                  <Input
+                    maxLength={4}
+                    onKeyDown={(e) => {
+                      if (
+                        !/[0-9]/.test(e.key) &&
+                        e.key !== "Backspace" &&
+                        e.key !== "Tab"
+                      ) {
+                        e.preventDefault();
+                      }
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+
+              <span
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  margin: "0 8px",
+                }}
+              >
+                -
+              </span>
+
+              <Col span={4}>
+                <Form.Item name={["citizenId", 2]} style={{ marginBottom: 0 }}>
+                  <Input
+                    maxLength={5}
+                    onKeyDown={(e) => {
+                      if (
+                        !/[0-9]/.test(e.key) &&
+                        e.key !== "Backspace" &&
+                        e.key !== "Tab"
+                      ) {
+                        e.preventDefault();
+                      }
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+
+              <span
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  margin: "0 8px",
+                }}
+              >
+                -
+              </span>
+
+              <Col span={3}>
+                <Form.Item name={["citizenId", 3]} style={{ marginBottom: 0 }}>
+                  <Input
+                    maxLength={2}
+                    onKeyDown={(e) => {
+                      if (
+                        !/[0-9]/.test(e.key) &&
+                        e.key !== "Backspace" &&
+                        e.key !== "Tab"
+                      ) {
+                        e.preventDefault();
+                      }
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+
+              <span
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  margin: "0 8px",
+                }}
+              >
+                -
+              </span>
+
+              <Col span={2}>
+                <Form.Item name={["citizenId", 4]} style={{ marginBottom: 0 }}>
+                  <Input
+                    maxLength={1}
+                    onKeyDown={(e) => {
+                      if (
+                        !/[0-9]/.test(e.key) &&
+                        e.key !== "Backspace" &&
+                        e.key !== "Tab"
+                      ) {
+                        e.preventDefault();
+                      }
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form.Item>
+        </Col>
+      </Row>
+
       <Row>
         <Col span={24}>
           <Form.Item
@@ -176,22 +310,30 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
 
       <Form.Item label={t("phone")} required style={{ marginBottom: 10 }}>
         <Row gutter={16}>
-          <Col span={8}>
+          <Col span={4}>
             <Form.Item
               name="phoneCode"
               rules={[{ required: true, message: "Required" }]}
+              style={{ marginBottom: 0 }}
             >
               <Select options={countryOptions} />
             </Form.Item>
           </Col>
 
-          <Col span={16}>
+          <span
+            style={{ display: "flex", alignItems: "center", margin: "0 8px" }}
+          >
+            -
+          </span>
+
+          <Col span={12}>
             <Form.Item
               name="phoneNumber"
               rules={[
                 { required: true, message: "Required" },
                 { pattern: /^[0-9]{8,10}$/, message: "Invalid phone" },
               ]}
+              style={{ marginBottom: 0 }}
             >
               <Input />
             </Form.Item>
@@ -200,7 +342,7 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
       </Form.Item>
 
       <Row>
-        <Col span={24}>
+        <Col span={12}>
           <Form.Item
             label={t("passport")}
             name="passport"
@@ -222,7 +364,7 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
       </Row>
 
       <Row>
-        <Col span={12}>
+        <Col span={10}>
           <Form.Item
             label={t("salary")}
             name="salary"

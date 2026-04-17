@@ -60,6 +60,7 @@ function FormPage() {
   };
 
   const onFinish = (values: any) => {
+    const citizenId = values.citizenId?.join("");
     const newPerson = {
       id: editingId || uuidv4(),
       title: values.title,
@@ -69,6 +70,7 @@ function FormPage() {
       phoneCode: values.phoneCode,
       phone: formatPhone(values.phoneCode, values.phoneNumber),
       nationality: values.nationality,
+      citizenId: citizenId,
       passport: values.passport,
       salary: Number(values.salary),
       birthday: values.birthday ? values.birthday.format("YYYY-MM-DD") : null,
@@ -165,6 +167,15 @@ function FormPage() {
               lastname: record.lastname,
               gender: record.gender,
               nationality: record.nationality,
+              citizenId: record.citizenId
+                ? [
+                    record.citizenId.slice(0, 1),
+                    record.citizenId.slice(1, 5),
+                    record.citizenId.slice(5, 10),
+                    record.citizenId.slice(10, 12),
+                    record.citizenId.slice(12, 13),
+                  ]
+                : [],
               phoneCode: record.phoneCode || "+66",
               phoneNumber:
                 record.phoneCode === "+66"
