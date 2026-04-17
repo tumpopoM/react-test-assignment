@@ -1,5 +1,6 @@
 import { Table, Typography } from "antd";
 import { useTranslation } from "react-i18next";
+import "./PersonTable.css";
 
 interface Props {
   data: any[];
@@ -49,11 +50,11 @@ function PersonTable({ data, onEdit, onDelete, rowSelection }: Props) {
       title: t("manage"),
       render: (_: any, record: any) => (
         <>
-          <Link onClick={() => onEdit(record)} style={{ color: "#000" }}>
+          <Link className="action-link" onClick={() => onEdit(record)}>
             {t("edit")}
           </Link>{" "}
           |{" "}
-          <Link onClick={() => onDelete(record.id)} style={{ color: "#000" }}>
+          <Link className="action-link" onClick={() => onDelete(record.id)}>
             {t("delete")}
           </Link>
         </>

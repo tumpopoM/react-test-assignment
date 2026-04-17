@@ -1,0 +1,9 @@
+.action-link {
+  color: #000 !important;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.action-link:hover {
+  color: #ffa200 !important;
+}
