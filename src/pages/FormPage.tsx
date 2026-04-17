@@ -1,4 +1,13 @@
-import { Button, Row, Col, Input, Select, DatePicker, Radio } from "antd";
+import {
+  Button,
+  Row,
+  Col,
+  Input,
+  Select,
+  DatePicker,
+  Radio,
+  Table,
+} from "antd";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -54,6 +63,35 @@ function FormPage() {
   const onFinishFailed = (errorInfo: any) => {
     console.log("FAILED:", errorInfo);
   };
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      render: (_: any, record: any) => `${record.firstname} ${record.lastname}`,
+    },
+    {
+      title: "Gender",
+      dataIndex: "gender",
+    },
+    {
+      title: "Mobile Phone",
+      dataIndex: "phone",
+    },
+    {
+      title: "Nationality",
+      dataIndex: "nationality",
+    },
+    {
+      title: "MANAGE",
+      render: () => (
+        <>
+          <a>Edit</a> | <a>Delete</a>
+        </>
+      ),
+    },
+  ];
+
   return (
     <div style={{ marginTop: 20 }}>
       {/* 🔹 Header */}
@@ -240,7 +278,12 @@ function FormPage() {
 
       {/* 🔹 Table placeholder */}
       <div style={{ marginTop: 20 }}>
-        <div style={{ background: "#fff", padding: 20 }}>TABLE HERE</div>
+        <Table
+          dataSource={persons}
+          columns={columns}
+          rowKey="id"
+          pagination={{ pageSize: 5 }}
+        />
       </div>
     </div>
   );
