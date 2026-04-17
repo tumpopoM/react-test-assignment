@@ -16,11 +16,13 @@ import {
   addPerson,
   deletePerson,
   deleteMultiple,
+  updatePerson,
 } from "../store/personSlice";
 import type { RootState } from "../store/store";
 import { useEffect, useState } from "react";
 import { Form, message } from "antd";
 import { v4 as uuidv4 } from "uuid";
+import dayjs from "dayjs";
 
 function FormPage() {
   const [form] = Form.useForm();
@@ -30,6 +32,7 @@ function FormPage() {
   const persons = useSelector((state: RootState) => state.person.list);
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   useEffect(() => {
     const data = localStorage.getItem("persons");
@@ -50,19 +53,27 @@ function FormPage() {
 
   const onFinish = (values: any) => {
     const newPerson = {
-      id: uuidv4(),
+      id: editingId || uuidv4(),
       title: values.title,
       firstname: values.firstname,
       lastname: values.lastname,
       gender: values.gender,
       phone: `${values.phoneCode}${values.phoneNumber}`,
       nationality: values.nationality,
+      passport: values.passport,
+      salary: values.salary,
+      birthday: values.birthday.format("YYYY-MM-DD"),
     };
 
-    dispatch(addPerson(newPerson));
+    if (editingId) {
+      dispatch(updatePerson(newPerson));
+      message.success("Update success");
+    } else {
+      dispatch(addPerson(newPerson));
+      message.success("Save success");
+    }
 
-    message.success("Save success");
-
+    setEditingId(null);
     form.resetFields();
   };
 
@@ -99,7 +110,27 @@ function FormPage() {
       title: "MANAGE",
       render: (_: any, record: any) => (
         <>
-          <a>Edit</a> |{" "}
+          <a
+            onClick={() => {
+              setEditingId(record.id);
+
+              form.setFieldsValue({
+                title: record.title,
+                firstname: record.firstname,
+                lastname: record.lastname,
+                gender: record.gender,
+                nationality: record.nationality,
+                phoneCode: record.phone?.slice(0, 3),
+                phoneNumber: record.phone?.slice(3),
+                passport: record.passport,
+                salary: record.salary,
+                birthday: record.birthday ? dayjs(record.birthday) : null,
+              });
+            }}
+          >
+            Edit
+          </a>{" "}
+          |{" "}
           <a
             onClick={() => {
               dispatch(deletePerson(record.id));
@@ -302,7 +333,7 @@ function FormPage() {
               setSelectedRowKeys([]);
             }
           }}
-        />
+        />{" "}
         {t("selectAll")}
         <Button
           danger
