@@ -16,7 +16,6 @@ import "./PersonForm.css";
 import { useRef, useEffect } from "react";
 import {
   requiredRule,
-  numberOnlyRule,
   phoneRule,
   passportRule,
   citizenIdRule,
