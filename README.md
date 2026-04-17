@@ -47,7 +47,7 @@
 
 - React (Functional Components + Hooks)
 - TypeScript
-- Ant Design (UI Library)
+- Antd Design (UI Library)
 - Redux Toolkit (State Management)
 - i18next (Internationalization)
 - dayjs (จัดการวันที่)
@@ -88,7 +88,7 @@ src/
 
 ```bash id="th-install"
 npm install
-npm start
+npm run dev
 ```
 
 ---
