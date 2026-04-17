@@ -25,11 +25,18 @@ function PersonTable({ data, onEdit, onDelete, rowSelection }: Props) {
     {
       title: t("mobile"),
       dataIndex: "phone",
+      render: (_: any, record: any) => {
+        if (record.phoneCode === "+66") {
+          return `${record.phoneCode}${record.phone.replace(/^0/, "")}`;
+        }
+        return `${record.phoneCode}${record.phone}`;
+      },
     },
     {
       title: t("nationality"),
       dataIndex: "nationality",
       sorter: (a: any, b: any) => a.nationality.localeCompare(b.nationality),
+      render: (_: any, record: any) => t(record.nationality),
     },
     {
       title: t("manage"),

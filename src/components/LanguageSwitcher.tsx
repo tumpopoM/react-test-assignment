@@ -9,8 +9,6 @@ function LanguageSwitcher() {
       style={{ display: "flex", justifyContent: "flex-end", marginBottom: 20 }}
     >
       <Space>
-        {/* <Button onClick={() => i18n.changeLanguage("en")}>EN</Button>
-        <Button onClick={() => i18n.changeLanguage("th")}>TH</Button> */}
         <Select
           value={i18n.language}
           onChange={(value) => i18n.changeLanguage(value)}
