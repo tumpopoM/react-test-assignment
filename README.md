@@ -1,6 +1,6 @@
 # 📌 React SPA - ระบบจัดการข้อมูลบุคคล
 
-แอปพลิเคชันแบบ Single Page Application (SPA) พัฒนาด้วย React และ Ant Design สำหรับจัดการข้อมูลบุคคล โดยรองรับการทำงานแบบ CRUD ครบถ้วน พร้อม validation และรองรับหลายภาษา (i18n)
+แอปพลิเคชันแบบ Single Page Application (SPA) พัฒนาด้วย React และ Antd Design สำหรับจัดการข้อมูลบุคคล โดยรองรับการทำงานแบบ CRUD ครบถ้วน พร้อม validation และรองรับหลายภาษา (i18n)
 
 ---
 
@@ -113,4 +113,4 @@ npm run dev
 
 ## 👤 ผู้พัฒนา
 
-พัฒนาขึ้นเพื่อใช้ในการทำ Frontend Assignment โดยใช้ React และ Ant Design
+พัฒนาขึ้นเพื่อใช้ในการทำ Frontend Assignment โดยใช้ React และ Antd Design
