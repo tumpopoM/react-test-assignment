@@ -10,6 +10,44 @@ interface Props {
 
 function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
   const { t } = useTranslation();
+  const countryOptions = [
+    {
+      value: "+66",
+      label: (
+        <span>
+          <img
+            src="https://flagcdn.com/w20/th.png"
+            style={{ width: 20, marginRight: 8 }}
+          />
+          +66
+        </span>
+      ),
+    },
+    {
+      value: "+1",
+      label: (
+        <span>
+          <img
+            src="https://flagcdn.com/w20/us.png"
+            style={{ width: 20, marginRight: 8 }}
+          />
+          +1
+        </span>
+      ),
+    },
+    {
+      value: "+81",
+      label: (
+        <span>
+          <img
+            src="https://flagcdn.com/w20/jp.png"
+            style={{ width: 20, marginRight: 8 }}
+          />
+          +81
+        </span>
+      ),
+    },
+  ];
 
   return (
     <Form
@@ -110,32 +148,27 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
         </Col>
       </Row>
 
-      <Row gutter={16}>
-        <Col span={8}>
-          <Form.Item
-            label={t("phone")}
-            name="phoneCode"
-            rules={[{ required: true }]}
-            style={{ marginBottom: 10 }}
-          >
-            <Select
-              style={{ width: "100%" }}
-              options={[{ value: "+66", label: "+66" }]}
-            />
-          </Form.Item>
-        </Col>
+      <Form.Item label={t("phone")} required style={{ marginBottom: 10 }}>
+        <Row gutter={16}>
+          <Col span={8}>
+            <Form.Item
+              name="phoneCode"
+              rules={[{ required: true, message: "Required" }]}
+            >
+              <Select options={countryOptions} />
+            </Form.Item>
+          </Col>
 
-        <Col span={16}>
-          <Form.Item
-            label=" "
-            name="phoneNumber"
-            rules={[{ required: true }]}
-            style={{ marginBottom: 10 }}
-          >
-            <Input />
-          </Form.Item>
-        </Col>
-      </Row>
+          <Col span={16}>
+            <Form.Item
+              name="phoneNumber"
+              rules={[{ required: true, message: "Required" }]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form.Item>
 
       <Row>
         <Col span={24}>
