@@ -11,7 +11,12 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { setPersons, addPerson } from "../store/personSlice";
+import {
+  setPersons,
+  addPerson,
+  deletePerson,
+  deleteMultiple,
+} from "../store/personSlice";
 import type { RootState } from "../store/store";
 import { useEffect, useState } from "react";
 import { Form, message } from "antd";
@@ -24,6 +29,7 @@ function FormPage() {
   const dispatch = useDispatch();
   const persons = useSelector((state: RootState) => state.person.list);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
 
   useEffect(() => {
     const data = localStorage.getItem("persons");
@@ -64,6 +70,13 @@ function FormPage() {
     console.log("FAILED:", errorInfo);
   };
 
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: (keys: React.Key[]) => {
+      setSelectedRowKeys(keys as string[]);
+    },
+  };
+
   const columns = [
     {
       title: "Name",
@@ -84,9 +97,16 @@ function FormPage() {
     },
     {
       title: "MANAGE",
-      render: () => (
+      render: (_: any, record: any) => (
         <>
-          <a>Edit</a> | <a>Delete</a>
+          <a>Edit</a> |{" "}
+          <a
+            onClick={() => {
+              dispatch(deletePerson(record.id));
+            }}
+          >
+            Delete
+          </a>
         </>
       ),
     },
@@ -270,8 +290,28 @@ function FormPage() {
 
       {/* 🔹 Action */}
       <div style={{ marginTop: 20 }}>
-        <input type="checkbox" /> {t("selectAll")}
-        <Button danger style={{ marginLeft: 10 }}>
+        <input
+          type="checkbox"
+          checked={
+            selectedRowKeys.length === persons.length && persons.length > 0
+          }
+          onChange={(e) => {
+            if (e.target.checked) {
+              setSelectedRowKeys(persons.map((p) => p.id));
+            } else {
+              setSelectedRowKeys([]);
+            }
+          }}
+        />
+        {t("selectAll")}
+        <Button
+          danger
+          style={{ marginLeft: 10 }}
+          onClick={() => {
+            dispatch(deleteMultiple(selectedRowKeys));
+            setSelectedRowKeys([]);
+          }}
+        >
           {t("delete")}
         </Button>
       </div>
@@ -282,6 +322,7 @@ function FormPage() {
           dataSource={persons}
           columns={columns}
           rowKey="id"
+          rowSelection={rowSelection}
           pagination={{ pageSize: 5 }}
         />
       </div>
