@@ -1,4 +1,4 @@
-import { Table, Typography } from "antd";
+import { Table, Typography, Popconfirm } from "antd";
 import { useTranslation } from "react-i18next";
 import "./PersonTable.css";
 
@@ -54,9 +54,14 @@ function PersonTable({ data, onEdit, onDelete, rowSelection }: Props) {
             {t("edit")}
           </Link>{" "}
           |{" "}
-          <Link className="action-link" onClick={() => onDelete(record.id)}>
-            {t("delete")}
-          </Link>
+          <Popconfirm
+            title={t("confirmDelete")}
+            onConfirm={() => onDelete(record.id)}
+            okText={t("yes")}
+            cancelText={t("no")}
+          >
+            <span className="action-link">{t("delete")}</span>
+          </Popconfirm>
         </>
       ),
     },
