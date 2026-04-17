@@ -11,6 +11,7 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
+import "./PersonForm.css";
 
 interface Props {
   form: any;
@@ -64,14 +65,7 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
     <Form
       form={form}
       layout="horizontal"
-      style={{
-        background: "#fff",
-        border: "1px solid #e2e2e2",
-        borderRadius: 10,
-        padding: 20,
-        maxWidth: 900,
-        gap: 0,
-      }}
+      className="person-form"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
