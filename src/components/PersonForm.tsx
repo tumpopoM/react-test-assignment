@@ -127,13 +127,26 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
           <Form.Item
             label={t("birthday")}
             name="birthday"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true },
+              {
+                validator: (_, value) => {
+                  if (!value) return Promise.resolve();
+
+                  if (value.isBefore(dayjs(), "day")) {
+                    return Promise.resolve();
+                  }
+
+                  return Promise.reject(new Error(t("invalidBirthday")));
+                },
+              },
+            ]}
             style={{ marginBottom: 10 }}
           >
             <DatePicker
               style={{ width: "100%" }}
               disabledDate={(current) =>
-                current && current > dayjs().startOf("day")
+                current && current >= dayjs().startOf("day")
               }
             />
           </Form.Item>

@@ -44,6 +44,7 @@ i18n.use(initReactI18next).init({
         american: "American",
         thai: "Thai",
         japanese: "Japanese",
+        invalidBirthday: "Birthday must be in the past",
       },
     },
     th: {
@@ -87,6 +88,7 @@ i18n.use(initReactI18next).init({
         american: "อเมริกัน",
         thai: "ไทย",
         japanese: "ญี่ปุ่น",
+        invalidBirthday: "วันเกิดต้องเป็นวันที่ผ่านมาแล้ว",
       },
     },
   },
