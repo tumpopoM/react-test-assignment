@@ -15,6 +15,7 @@ import { Form, message } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
 import PersonForm from "../components/PersonForm";
+import PersonTable from "../components/PersonTable";
 
 function FormPage() {
   const [form] = Form.useForm();
@@ -192,12 +193,26 @@ function FormPage() {
 
       {/* 🔹 Table placeholder */}
       <div style={{ marginTop: 20 }}>
-        <Table
-          dataSource={persons}
-          columns={columns}
-          rowKey="id"
+        <PersonTable
+          data={persons}
           rowSelection={rowSelection}
-          pagination={{ pageSize: 5 }}
+          onEdit={(record) => {
+            setEditingId(record.id);
+
+            form.setFieldsValue({
+              title: record.title,
+              firstname: record.firstname,
+              lastname: record.lastname,
+              gender: record.gender,
+              nationality: record.nationality,
+              phoneCode: record.phone?.slice(0, 3),
+              phoneNumber: record.phone?.slice(3),
+              passport: record.passport,
+              salary: record.salary,
+              birthday: record.birthday ? dayjs(record.birthday) : null,
+            });
+          }}
+          onDelete={(id) => dispatch(deletePerson(id))}
         />
       </div>
     </div>

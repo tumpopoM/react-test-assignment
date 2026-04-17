@@ -1,6 +1,5 @@
 import { Form, Input, Button, Row, Col, Select, DatePicker, Radio } from "antd";
 import { useTranslation } from "react-i18next";
-import dayjs from "dayjs";
 
 interface Props {
   form: any;

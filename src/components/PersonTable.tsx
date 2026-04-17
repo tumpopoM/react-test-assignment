@@ -1,0 +1,56 @@
+import { Table } from "antd";
+import { useTranslation } from "react-i18next";
+
+interface Props {
+  data: any[];
+  onEdit: (record: any) => void;
+  onDelete: (id: string) => void;
+  rowSelection: any;
+}
+
+function PersonTable({ data, onEdit, onDelete, rowSelection }: Props) {
+  const { t } = useTranslation();
+
+  const columns = [
+    {
+      title: t("name"),
+      render: (_: any, record: any) => `${record.firstname} ${record.lastname}`,
+      sorter: (a: any, b: any) => a.firstname.localeCompare(b.firstname),
+    },
+    {
+      title: t("gender"),
+      dataIndex: "gender",
+      sorter: (a: any, b: any) => a.gender.localeCompare(b.gender),
+    },
+    {
+      title: t("mobile"),
+      dataIndex: "phone",
+    },
+    {
+      title: t("nationality"),
+      dataIndex: "nationality",
+      sorter: (a: any, b: any) => a.nationality.localeCompare(b.nationality),
+    },
+    {
+      title: t("manage"),
+      render: (_: any, record: any) => (
+        <>
+          <a onClick={() => onEdit(record)}>{t("edit")}</a> |{" "}
+          <a onClick={() => onDelete(record.id)}>{t("delete")}</a>
+        </>
+      ),
+    },
+  ];
+
+  return (
+    <Table
+      dataSource={data}
+      columns={columns}
+      rowKey="id"
+      rowSelection={rowSelection}
+      pagination={{ pageSize: 5 }}
+    />
+  );
+}
+
+export default PersonTable;
