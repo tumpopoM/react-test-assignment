@@ -14,7 +14,7 @@ function Home() {
             <Card
               hoverable
               style={cardStyle}
-              onClick={() => navigate("/form")}
+              onClick={() => navigate("/shape")}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "#ffa200";
               }}

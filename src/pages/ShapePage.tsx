@@ -16,9 +16,8 @@ function ShapePage() {
           marginBottom: 10,
         }}
       >
-        <Button onClick={() => navigate("/")}>{t("back")}</Button>
+        <Button onClick={() => navigate("/")}>{t("home")}</Button>
       </div>
-
       <ShapeGrid />
     </div>
   );

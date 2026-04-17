@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Popconfirm } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -90,16 +90,19 @@ function FormPage() {
           }}
         />{" "}
         {t("selectAll")}
-        <Button
-          danger
-          style={{ marginLeft: 10 }}
-          onClick={() => {
+        <Popconfirm
+          title={t("confirmDeleteAll")}
+          onConfirm={() => {
             dispatch(deleteMultiple(selectedRowKeys));
             setSelectedRowKeys([]);
           }}
+          okText={t("yes")}
+          cancelText={t("no")}
         >
-          {t("delete")}
-        </Button>
+          <Button danger style={{ marginLeft: 10 }}>
+            {t("delete")}
+          </Button>
+        </Popconfirm>
       </div>
 
       {/* 🔹 Table placeholder */}

@@ -54,6 +54,7 @@ i18n.use(initReactI18next).init({
         confirmDelete: "Are you sure to delete?",
         yes: "Yes",
         no: "No",
+        confirmDeleteAll: "Are you sure to delete selected items?",
       },
     },
     th: {
@@ -108,6 +109,7 @@ i18n.use(initReactI18next).init({
         confirmDelete: "คุณแน่ใจว่าต้องการลบ?",
         yes: "ใช่",
         no: "ยกเลิก",
+        confirmDeleteAll: "คุณแน่ใจว่าต้องการลบรายการที่เลือก?",
       },
     },
   },
