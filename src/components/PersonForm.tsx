@@ -8,10 +8,12 @@ import {
   DatePicker,
   Radio,
   InputNumber,
+  type InputRef,
 } from "antd";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import "./PersonForm.css";
+import { useRef } from "react";
 
 interface Props {
   form: any;
@@ -22,6 +24,14 @@ interface Props {
 
 function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
   const { t } = useTranslation();
+  const citizenRefs = useRef<(InputRef | null)[]>([]);
+
+  const handleCitizenChange = (value: string, index: number) => {
+    if (value.length > 0 && index < citizenRefs.current.length - 1) {
+      citizenRefs.current[index + 1]?.focus();
+    }
+  };
+
   const countryOptions = [
     {
       value: "+66",
@@ -173,6 +183,10 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
                 <Form.Item name={["citizenId", 0]} style={{ marginBottom: 0 }}>
                   <Input
                     maxLength={1}
+                    ref={(el) => {
+                      citizenRefs.current[0] = el;
+                    }}
+                    onChange={(e) => handleCitizenChange(e.target.value, 0)}
                     onKeyDown={(e) => {
                       if (
                         !/[0-9]/.test(e.key) &&
@@ -200,6 +214,10 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
                 <Form.Item name={["citizenId", 1]} style={{ marginBottom: 0 }}>
                   <Input
                     maxLength={4}
+                    ref={(el) => {
+                      citizenRefs.current[1] = el;
+                    }}
+                    onChange={(e) => handleCitizenChange(e.target.value, 1)}
                     onKeyDown={(e) => {
                       if (
                         !/[0-9]/.test(e.key) &&
@@ -227,6 +245,10 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
                 <Form.Item name={["citizenId", 2]} style={{ marginBottom: 0 }}>
                   <Input
                     maxLength={5}
+                    ref={(el) => {
+                      citizenRefs.current[2] = el;
+                    }}
+                    onChange={(e) => handleCitizenChange(e.target.value, 2)}
                     onKeyDown={(e) => {
                       if (
                         !/[0-9]/.test(e.key) &&
@@ -254,6 +276,10 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
                 <Form.Item name={["citizenId", 3]} style={{ marginBottom: 0 }}>
                   <Input
                     maxLength={2}
+                    ref={(el) => {
+                      citizenRefs.current[3] = el;
+                    }}
+                    onChange={(e) => handleCitizenChange(e.target.value, 3)}
                     onKeyDown={(e) => {
                       if (
                         !/[0-9]/.test(e.key) &&
@@ -281,6 +307,10 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
                 <Form.Item name={["citizenId", 4]} style={{ marginBottom: 0 }}>
                   <Input
                     maxLength={1}
+                    ref={(el) => {
+                      citizenRefs.current[4] = el;
+                    }}
+                    onChange={(e) => handleCitizenChange(e.target.value, 4)}
                     onKeyDown={(e) => {
                       if (
                         !/[0-9]/.test(e.key) &&
