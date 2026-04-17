@@ -139,7 +139,7 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
           </Form.Item>
         </Col>
 
-        <Col span={16}>
+        <Col span={10}>
           <Form.Item
             label={t("nationality")}
             name="nationality"
@@ -326,7 +326,7 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
             -
           </span>
 
-          <Col span={12}>
+          <Col span={10}>
             <Form.Item
               name="phoneNumber"
               rules={[
@@ -399,7 +399,7 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
       </Row>
 
       {/* 🔹 Buttons */}
-      <Row justify="end" style={{ marginTop: 20, gap: 10 }}>
+      <Row justify="end" style={{ marginTop: 10, gap: 10 }}>
         <Button onClick={() => form.resetFields()}>{t("reset")}</Button>
         <Button type="primary" htmlType="submit">
           {editingId ? t("update") : t("submit")}

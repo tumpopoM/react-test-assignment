@@ -31,6 +31,12 @@ function PersonTable({ data, onEdit, onDelete, rowSelection }: Props) {
         }
         return `${record.phoneCode}${record.phone}`;
       },
+      sorter: (a: any, b: any) => {
+        const phoneA = `${a.phoneCode}${a.phone}`.replace(/\D/g, "");
+        const phoneB = `${b.phoneCode}${b.phone}`.replace(/\D/g, "");
+
+        return Number(phoneA) - Number(phoneB);
+      },
     },
     {
       title: t("nationality"),
