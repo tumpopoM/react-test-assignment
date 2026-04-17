@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Table, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
 
 function PersonTable({ data, onEdit, onDelete, rowSelection }: Props) {
   const { t } = useTranslation();
+  const { Link } = Typography;
 
   const columns = [
     {
@@ -48,8 +49,13 @@ function PersonTable({ data, onEdit, onDelete, rowSelection }: Props) {
       title: t("manage"),
       render: (_: any, record: any) => (
         <>
-          <a onClick={() => onEdit(record)}>{t("edit")}</a> |{" "}
-          <a onClick={() => onDelete(record.id)}>{t("delete")}</a>
+          <Link onClick={() => onEdit(record)} style={{ color: "#000" }}>
+            {t("edit")}
+          </Link>{" "}
+          |{" "}
+          <Link onClick={() => onDelete(record.id)} style={{ color: "#000" }}>
+            {t("delete")}
+          </Link>
         </>
       ),
     },
