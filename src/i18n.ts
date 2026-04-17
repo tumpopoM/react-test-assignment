@@ -1,4 +1,4 @@
-import i18n from "i18next";
+import i18n, { t } from "i18next";
 import { initReactI18next } from "react-i18next";
 
 i18n.use(initReactI18next).init({
@@ -6,6 +6,7 @@ i18n.use(initReactI18next).init({
     en: {
       translation: {
         test1: "Test 1",
+        test2: "Test 2",
         layoutStyle: "Layout & Style",
         moveShape: "Move Shape",
         movePosition: "Move Position",
@@ -41,6 +42,7 @@ i18n.use(initReactI18next).init({
     th: {
       translation: {
         test1: "แบบทดสอบที่ 1",
+        test2: "แบบทดสอบที่ 2",
         layoutStyle: "เลย์เอาต์และสไตล์",
         moveShape: "เลื่อนรูปทรง",
         movePosition: "สลับตำแหน่ง",
