@@ -13,7 +13,7 @@ import {
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import "./PersonForm.css";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import {
   requiredRule,
   numberOnlyRule,
@@ -22,6 +22,7 @@ import {
   citizenIdRule,
   birthdayRule,
 } from "../utils/validation";
+import i18n from "../i18n";
 
 interface Props {
   form: any;
@@ -81,20 +82,36 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
     },
   ];
 
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      form.validateFields();
+    };
+
+    i18n.on("languageChanged", handleLanguageChange);
+
+    return () => {
+      i18n.off("languageChanged", handleLanguageChange);
+    };
+  }, [form]);
+
   return (
     <Form
       form={form}
+      key={i18n.language}
       layout="horizontal"
       className="person-form"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
+      validateMessages={{
+        required: t("required"),
+      }}
     >
       <Row gutter={16}>
         <Col span={6}>
           <Form.Item
             label={t("title")}
             name="title"
-            rules={[requiredRule(t)]}
+            rules={[requiredRule]}
             style={{ marginBottom: 10 }}
           >
             <Select
@@ -112,7 +129,7 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
             label={t("firstName")}
             name="firstname"
             rules={[
-              requiredRule(t),
+              requiredRule,
               { pattern: /^[A-Za-zก-๙\s]+$/, message: t("invalidFirstName") },
             ]}
             style={{ marginBottom: 10 }}
@@ -126,7 +143,7 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
             label={t("lastName")}
             name="lastname"
             rules={[
-              requiredRule(t),
+              requiredRule,
               { pattern: /^[A-Za-zก-๙\s]+$/, message: t("invalidLastName") },
             ]}
             style={{ marginBottom: 10 }}
@@ -141,7 +158,7 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
           <Form.Item
             label={t("birthday")}
             name="birthday"
-            rules={[requiredRule(t), birthdayRule(t)]}
+            rules={[requiredRule, birthdayRule(t)]}
             style={{ marginBottom: 10 }}
           >
             <DatePicker
@@ -157,7 +174,7 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
           <Form.Item
             label={t("nationality")}
             name="nationality"
-            rules={[requiredRule(t)]}
+            rules={[requiredRule]}
             style={{ marginBottom: 10 }}
           >
             <Select
@@ -348,10 +365,10 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
 
       <Form.Item label={t("phone")} required style={{ marginBottom: 10 }}>
         <Row gutter={16}>
-          <Col span={4}>
+          <Col span={6}>
             <Form.Item
               name="phoneCode"
-              rules={[requiredRule(t)]}
+              rules={[requiredRule]}
               style={{ marginBottom: 0 }}
             >
               <Select options={countryOptions} />
@@ -367,7 +384,7 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
           <Col span={10}>
             <Form.Item
               name="phoneNumber"
-              rules={[requiredRule(t), phoneRule(t)]}
+              rules={[requiredRule, phoneRule(t)]}
               style={{ marginBottom: 0 }}
             >
               <Input />
@@ -401,7 +418,7 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
             label={t("salary")}
             name="salary"
             style={{ marginBottom: 10 }}
-            rules={[requiredRule(t)]}
+            rules={[requiredRule]}
           >
             <InputNumber
               style={{ width: "100%" }}
