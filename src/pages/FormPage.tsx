@@ -90,24 +90,27 @@ function FormPage() {
 
   const columns = [
     {
-      title: "Name",
+      title: t("name"),
       dataIndex: "name",
       render: (_: any, record: any) => `${record.firstname} ${record.lastname}`,
+      sorter: (a: any, b: any) => a.firstname.localeCompare(b.firstname),
     },
     {
-      title: "Gender",
+      title: t("gender"),
       dataIndex: "gender",
+      sorter: (a: any, b: any) => a.gender.localeCompare(b.gender),
     },
     {
-      title: "Mobile Phone",
+      title: t("mobile"),
       dataIndex: "phone",
     },
     {
-      title: "Nationality",
+      title: t("nationality"),
       dataIndex: "nationality",
+      sorter: (a: any, b: any) => a.nationality.localeCompare(b.nationality),
     },
     {
-      title: "MANAGE",
+      title: t("manage"),
       render: (_: any, record: any) => (
         <>
           <a
@@ -128,7 +131,7 @@ function FormPage() {
               });
             }}
           >
-            Edit
+            {t("edit")}
           </a>{" "}
           |{" "}
           <a
@@ -136,7 +139,7 @@ function FormPage() {
               dispatch(deletePerson(record.id));
             }}
           >
-            Delete
+            {t("delete")}
           </a>
         </>
       ),
@@ -193,7 +196,7 @@ function FormPage() {
 
           <Col span={9}>
             <Form.Item
-              label={t("firstname")}
+              label={t("firstName")}
               name="firstname"
               rules={[{ required: true }]}
               style={{ marginBottom: 10 }}
@@ -204,7 +207,7 @@ function FormPage() {
 
           <Col span={9}>
             <Form.Item
-              label={t("lastname")}
+              label={t("lastName")}
               name="lastname"
               rules={[{ required: true }]}
               style={{ marginBottom: 10 }}
@@ -235,7 +238,7 @@ function FormPage() {
             >
               <Select
                 style={{ width: "100%" }}
-                options={[{ value: "thai", label: "Thai" }]}
+                options={[{ value: "Thai", label: "Thai" }]}
               />
             </Form.Item>
           </Col>
@@ -250,9 +253,9 @@ function FormPage() {
               style={{ marginBottom: 10 }}
             >
               <Radio.Group>
-                <Radio value="male">Male</Radio>
-                <Radio value="female">Female</Radio>
-                <Radio value="unsex">Unsex</Radio>
+                <Radio value="Male">{t("male")}</Radio>
+                <Radio value="Female">{t("female")}</Radio>
+                <Radio value="Unsex">{t("unsex")}</Radio>
               </Radio.Group>
             </Form.Item>
           </Col>
@@ -314,7 +317,7 @@ function FormPage() {
         <Row justify="end" style={{ marginTop: 20, gap: 10 }}>
           <Button onClick={() => form.resetFields()}>{t("reset")}</Button>
           <Button type="primary" htmlType="submit">
-            {t("submit")}
+            {editingId ? t("update") : t("submit")}
           </Button>
         </Row>
       </Form>
