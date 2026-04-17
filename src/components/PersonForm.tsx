@@ -1,4 +1,15 @@
-import { Form, Input, Button, Row, Col, Select, DatePicker, Radio } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Row,
+  Col,
+  Select,
+  DatePicker,
+  Radio,
+  InputNumber,
+} from "antd";
+import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -85,7 +96,10 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
           <Form.Item
             label={t("firstName")}
             name="firstname"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true },
+              { pattern: /^[A-Za-zก-๙\s]+$/, message: "Invalid First Name" },
+            ]}
             style={{ marginBottom: 10 }}
           >
             <Input />
@@ -96,7 +110,10 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
           <Form.Item
             label={t("lastName")}
             name="lastname"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true },
+              { pattern: /^[A-Za-zก-๙\s]+$/, message: "Invalid Last Name" },
+            ]}
             style={{ marginBottom: 10 }}
           >
             <Input />
@@ -112,7 +129,12 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
             rules={[{ required: true }]}
             style={{ marginBottom: 10 }}
           >
-            <DatePicker style={{ width: "100%" }} />
+            <DatePicker
+              style={{ width: "100%" }}
+              disabledDate={(current) =>
+                current && current > dayjs().endOf("day")
+              }
+            />
           </Form.Item>
         </Col>
 
@@ -162,7 +184,10 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
           <Col span={16}>
             <Form.Item
               name="phoneNumber"
-              rules={[{ required: true, message: "Required" }]}
+              rules={[
+                { required: true, message: "Required" },
+                { pattern: /^[0-9]{8,10}$/, message: "Invalid phone" },
+              ]}
             >
               <Input />
             </Form.Item>
@@ -176,8 +201,18 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
             label={t("passport")}
             name="passport"
             style={{ marginBottom: 10 }}
+            rules={[
+              { pattern: /^[0-9]+$/, message: "Numbers only" },
+              { min: 8, message: "At least 8 digits" },
+            ]}
           >
-            <Input />
+            <Input
+              onKeyPress={(e) => {
+                if (!/[0-9]/.test(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -187,10 +222,32 @@ function PersonForm({ form, onFinish, editingId, onFinishFailed }: Props) {
           <Form.Item
             label={t("salary")}
             name="salary"
-            rules={[{ required: true }]}
             style={{ marginBottom: 10 }}
+            rules={[{ required: true }]}
           >
-            <Input />
+            <InputNumber
+              style={{ width: "100%" }}
+              min={0}
+              precision={0}
+              formatter={(value?: string | number) =>
+                value ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : ""
+              }
+              parser={(value?: string) =>
+                value ? Number(value.replace(/,/g, "")) : 0
+              }
+              onKeyDown={(e) => {
+                if (
+                  !/[0-9]/.test(e.key) &&
+                  e.key !== "Backspace" &&
+                  e.key !== "Delete" &&
+                  e.key !== "ArrowLeft" &&
+                  e.key !== "ArrowRight" &&
+                  e.key !== "Tab"
+                ) {
+                  e.preventDefault();
+                }
+              }}
+            />
           </Form.Item>
         </Col>
       </Row>
