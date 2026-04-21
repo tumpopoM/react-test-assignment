@@ -113,4 +113,4 @@ npm run dev
 
 ## 👤 ผู้พัฒนา
 
-พัฒนาขึ้นเพื่อใช้ในการทำ Frontend Assignment โดยใช้ React และ Antd Design
+พัฒนาขึ้นเพื่อใช้ในการทำ Frontend Assignment โดยใช้ React และ Antd Design by Wijitra Rattanason
